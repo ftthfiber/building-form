@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Στοιχεία Διαχειριστή Κτηρίου</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8e8; /* Σαπουνί χρώμα */
+            display: flex;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            width: 90%;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 8px;
+        }
+        td:first-child {
+            width: 30%; /* Προσαρμογή στο μέγιστο πλάτος των ετικετών */
+            white-space: nowrap;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input:invalid, textarea:invalid, select:invalid {
+            border: 1px solid red;
+        }
+		
+		input[type="checkbox"], select {
+		width: auto; /* Prevent 100% width for these elements */
+		display: inline-block; /* Ensure inline alignment */
+		vertical-align: middle; /* Align to the middle */
+		margin-right: 10px; /* Optional: Adds spacing between checkbox and select */
+		}
+		
+        textarea {
+            resize: none;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+		#legal-entity-details {
+			display: none;
+		}
+		h3 {
+			text-align: center;
+		}
+		/* Μετατροπή σε κεφαλαία γράμματα για όλα τα πεδία */
+		input[type="text"], input[type="tel"], select, textarea {
+			text-transform: uppercase;
+		}
+    </style>
+</head>
+<body>
+    <form id="building-form">
+        <h1>Στοιχεία Διαχειριστή Κτηρίου</h1>
+		
+        <table>
+			<tr>
+                <td><label for="building-type">Κτήριο:</label></td>
+                <td>
+                    <select id="building-type" name="Κτήριο:">
+                        <option value="Μονοκατοικία ιδιοκτησίας φυσικού προσώπου" name="Μονοκατοικία ιδιοκτησίας φυσικού προσώπου" selected>Μονοκατοικία ιδιοκτησίας φυσικού προσώπου</option>
+                        <option value="Μονοκατοικία ιδιοκτησίας νομικού προσώπου" name="Μονοκατοικία ιδιοκτησίας νομικού προσώπου">Μονοκατοικία ιδιοκτησίας νομικού προσώπου</option>
+                        <option value="Πολυκατοικία με διαχειριστή" name="Πολυκατοικία με διαχειριστή">Πολυκατοικία με διαχειριστή</option>
+                        <option value="Πολυκατοικία χωρίς διαχειριστή" name="Πολυκατοικία χωρίς διαχειριστή">Πολυκατοικία χωρίς διαχειριστή</option>
+                    </select>
+                </td>
+            </tr>
+			
+			
+			<tr id="legal-entity-details">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td><label for="legal-entity-name">Επωνυμία Νομικού Προσώπου:</label></td>
+                            <td><input type="text" id="legal-entity-name" name="Επωνυμία Νομικού Προσώπου:"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="legal-entity-address">Διεύθυνση Έδρας:</label></td>
+                            <td><input type="text" id="legal-entity-address" name="Διεύθυνση Έδρας:"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="legal-entity-phone">Τηλέφωνο:</label></td>
+                            <td><input type="tel" id="legal-entity-phone" name="Τηλέφωνο:" pattern="\d{10}" title="Πρέπει να έχει 10 ψηφία" placeholder="Πρέπει να έχει 10 ψηφία"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="legal-entity-email">Email:</label></td>
+                            <td><input type="email" id="legal-entity-email" name="Email:" placeholder="Πρέπει να έχει τη μορφή xxxx@xxx.xx"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="legal-entity-afm">Α.Φ.Μ. Νομικού Προσώπου:</label></td>
+                            <td><input type="text" id="legal-entity-afm" name="Α.Φ.Μ. Νομικού Προσώπου:" pattern="\d{9}" title="Πρέπει να είναι 9 νούμερα" placeholder="Πρέπει να είναι 9 νούμερα"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+			
+			
+            <tr>
+                <td><label for="building-id">Building Id</label></td>
+                <td><input type="text" id="building-id" name="Building Id" required pattern="\d{9}" title="Πρέπει να είναι 9 νούμερα" placeholder="Πρέπει να είναι 9 νούμερα"></td>
+            </tr>
+			<tr>
+				<td colspan="2" >
+					<h3>Στοιχεία Φυσικού Προσώπου</h3>
+				</td>
+			</tr>
+            <tr>
+                <td><label for="customer-surname">Επώνυμο</label></td>
+                <td><input type="text" id="customer-surname" name="Επώνυμο" pattern="^([^\p{N}\p{S}\p{C}\\\/]{2,20})$" required></td>
+            </tr>
+			<tr>
+                <td><label for="customer-name">Όνομα</label></td>
+                <td><input type="text" id="customer-name" name="Όνομα" pattern="^([^\p{N}\p{S}\p{C}\\\/]{2,20})$" required></td>
+            </tr>
+            <tr>
+                <td><label for="father-name">Πατρώνυμο</label></td>
+                <td><input type="text" id="father-name" name="Πατρώνυμο" pattern="^([^\p{N}\p{S}\p{C}\\\/]{2,20})$" required></td>
+            </tr>
+            <tr>
+                <td><label for="street">Οδός</label></td>
+                <td><input type="text" id="street" name="Οδός" required></td>
+            </tr>
+            <tr>
+                <td><label for="number">Αριθμός</label></td>
+                <td><input type="text" id="number" name="Αριθμός" required></td>
+            </tr>
+			
+            <tr>
+			<td><label for="city">Δήμος</label></td>
+			<td>
+				<div id="city-dropdown">
+					<input type="text" id="city" name="Δήμος" required autocomplete="off">
+					<div id="city-list"></div>
+				</div>
+			</td>
+			</tr>
+			
+			<!-- 
+            <tr>
+                <td><label for="region">Περιφερειακή Ενότητα</label></td>
+                <td><input type="text" id="region" name="region" required></td>
+            </tr>-->
+			
+			<tr>
+                <td><label for="region">Περιφερειακή Ενότητα</label></td>
+                <td>
+                    <div id="region-dropdown">
+                        <input type="text" id="region" name="Περιφερειακή Ενότητα" required autocomplete="off">
+                        <div id="region-list"></div>
+                    </div>
+                </td>
+            </tr>
+			
+						
+            <tr>
+                <td><label for="postal-code">Τ.Κ.</label></td>
+                <td><input type="text" id="postal-code" name="Τ.Κ." required pattern="\d{5}" title="Πρέπει να είναι 5 νούμερα" placeholder="Πρέπει να είναι 5 νούμερα"></td>
+            </tr>
+            <tr>
+                <td><label for="id-passport">Α.Δ.Τ. / Αριθμός Διαβατηρίου</label></td>
+                <td><input type="text" id="id-passport" name="Α.Δ.Τ. / Αριθμός Διαβατηρίου" required></td>
+            </tr>
+            <tr>
+                <td><label for="vat-number">Α.Φ.Μ.</label></td>
+                <td><input type="text" id="vat-number" name="Α.Φ.Μ." required pattern="\d{9}" title="Πρέπει να είναι 9 νούμερα" placeholder="Πρέπει να είναι 9 νούμερα"></td>
+            </tr>
+			
+			<!--
+            <tr>
+                <td><label for="tax-office">Δ.Ο.Υ.</label></td>
+                <td><input type="text" id="tax-office" name="tax-office" required></td>
+            </tr>
+			-->
+			
+            <tr>
+                <td><label for="phone">Τηλέφωνο επικοινωνίας</label></td>
+                <td><input type="tel" id="phone" name="Τηλέφωνο επικοινωνίας" required pattern="\d{10}" title="Πρέπει να έχει 10 ψηφία" placeholder="Πρέπει να έχει 10 ψηφία"></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email</label></td>
+                <td><input type="email" id="email" name="email" required placeholder="Πρέπει να έχει τη μορφή xxxx@xxx.xx"></td>
+            </tr>
+            <tr>
+                <td><label for="additional-contact">Επιπλέον τρόποι επικοινωνίας</label></td>
+                <td>
+                    <select id="additional-contact" name="Επιπλέον τρόποι επικοινωνίας">
+						<option value=""></option>
+                        <option value="Viber">Viber</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Messenger">Messenger</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="notes">Παρατηρήσεις</label></td>
+                <td><textarea id="notes" name="Παρατηρήσεις" rows="3"></textarea></td>
+            </tr>
+			
+			<tr>
+                <td><label for="autopsy_eng">Ονοματεπώνυμο μηχανικού Αυτοψίας</label></td>
+                <td><input type="text" id="autopsy_eng_name" name="Ονοματεπώνυμο μηχανικού Αυτοψίας" pattern="^([^\p{N}\p{S}\p{C}\\\/]{2,20})$" required></td>
+            </tr>
+			<tr>
+                <td><label for="autopsy_eng_phone">Τηλέφωνο επικοινωνίας μηχανικού</label></td>
+                <td><input type="tel" id="autopsy_eng_phone" name="Τηλέφωνο επικοινωνίας μηχανικού Αυτοψίας" required pattern="\d{10}" title="Πρέπει να έχει 10 ψηφία" placeholder="Πρέπει να έχει 10 ψηφία"></td>
+            </tr>
+						
+        </table>
+		<!--
+        <button type="button" onclick="downloadData()">Download</button>
+		-->
+		<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button type="button" onclick="downloadData()">Download</button>
+        <button type="button" onclick="refreshForm()">Refresh</button>
+    </div>
+    </form>
+
+    <script>
+		// Συνάρτηση για αφαίρεση τόνων χωρίς να επηρεάζονται τα κεφαλαία γράμματα
+		function removeAccents(str) {
+			var accentMap = {
+				'Ά': 'Α', 'Έ': 'Ε', 'Ή': 'Η', 'Ί': 'Ι', 'Ό': 'Ο', 'Ύ': 'Υ', 'Ώ': 'Ω',
+				'ά': 'α', 'έ': 'ε', 'ή': 'η', 'ί': 'ι', 'ό': 'ο', 'ύ': 'υ', 'ώ': 'ω',
+				'Ϊ': 'Ι', 'Ϋ': 'Υ', 'ϊ': 'ι', 'ΐ': 'ι', 'ϋ': 'υ', 'ΰ': 'υ'
+			};
+			return str.split('').map(function(c) {
+				return accentMap[c] || c;  // Αν υπάρχει τονισμένο γράμμα, το αντικαθιστά
+			}).join('');
+		}
+		// Στην είσοδο των πεδίων να κάνεις αυτόματα τη μετατροπή κατά την πληκτρολόγηση
+		document.querySelectorAll('#building-form input, #building-form textarea').forEach(function(element) {
+			element.addEventListener('input', function() {
+				element.value = removeAccents(element.value);  // Αφαίρεση τόνων κατά τη διάρκεια πληκτρολόγησης
+			});
+		});
+		// Form submission and validation
+		function downloadData() {
+			let valid = true;
+			const form = document.querySelector('form');
+			const invalidFields = [];
+
+			// Validate form inputs
+			form.querySelectorAll('input, select, textarea').forEach(input => {
+				if (!input.checkValidity()) {
+					input.style.border = '1px solid red';
+					valid = false;
+					invalidFields.push(input.name);
+				} else {
+					input.style.border = '1px solid #ccc';
+				}
+			});
+
+			if (!valid) {
+				alert('Συμπληρώστε όλα τα πεδία σωστά.\nMissing: ' + invalidFields.join(', '));
+				return;
+			}
+
+			const formData = new FormData(form);
+			const data = [["Field", "Value"]]; // Headers for the CSV
+
+			// Collect form data into rows (converted to uppercase except for email)
+			Array.from(formData.entries()).forEach(([key, value]) => {
+				if (value && value.trim() !== '') {
+					if (key.toLowerCase() !== 'email') {  // Exclude 'email' field from uppercase conversion
+						data.push([key.toUpperCase(), value.toUpperCase()]); // Convert both key & value to uppercase
+					} else {
+						data.push([key.toUpperCase(), value]); // Keep email as it is
+					}
+				}
+			});
+
+			// Generate CSV content with BOM for UTF-8 compatibility
+			const csvContent = "\uFEFF" + data.map(row =>
+				row.map(item => `"${item.replace(/"/g, '""')}"`).join(",")
+			).join("\r\n");
+
+			// Create Blob for CSV file
+			const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+			const url = URL.createObjectURL(blob);
+
+			// Get the Building Id from the form
+			const buildingId = (formData.get('Building Id') || 'Unknown').toUpperCase();
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `Building_admin_${buildingId}.csv`;
+
+			// Append link to the document, trigger download, then remove the link
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+
+			// Revoke the URL to free memory
+			URL.revokeObjectURL(url);
+		}
+
+
+			
+			
+			
+	
+	
+		const form = document.getElementById('building-form');
+        const individualDropdown = document.getElementById('is-individual');
+        const fatherNameField = document.getElementById('father-name');
+		
+		// Πίνακας αντιστοίχισης Δήμων με Περιφερειακές Ενότητες
+		const municipalityToRegion = {
+			'ΑΒΔΗΡΩΝ': 'ΞΑΝΘΗΣ',
+			 'ΑΓΑΘΟΝΗΣΙΟΥ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΑΓΙΑΣ': 'ΛΑΡΙΣΑΣ',
+			 'ΑΓΙΑΣ ΒΑΡΒΑΡΑΣ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΓΙΑΣ ΠΑΡΑΣΚΕΥΗΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΓΙΟΥ ΒΑΣΙΛΕΙΟΥ': 'ΡΕΘΥΜΝΟΥ',
+			 'ΑΓΙΟΥ ΔΗΜΗΤΡΙΟΥ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΓΙΟΥ ΕΥΣΤΡΑΤΙΟΥ': 'ΛΗΜΝΟΥ',
+			 'ΑΓΙΟΥ ΝΙΚΟΛΑΟΥ': 'ΛΑΣΙΘΙΟΥ',
+			 'ΑΓΙΩΝ ΑΝΑΡΓΥΡΩΝ – ΚΑΜΑΤΕΡΟΥ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΓΚΙΣΤΡΙΟΥ': 'ΝΗΣΩΝ',
+			 'ΑΓΡΑΦΩΝ': 'ΕΥΡΥΤΑΝΙΑΣ',
+			 'ΑΓΡΙΝΙΟΥ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΑΘΗΝΑΙΩΝ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΙΓΑΛΕΩ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΙΓΙΑΛΕΙΑΣ': 'ΑΧΑΪΑΣ',
+			 'ΑΙΓΙΝΑΣ': 'ΝΗΣΩΝ',
+			 'ΑΚΤΙΟΥ – ΒΟΝΙΤΣΑΣ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΑΛΕΞΑΝΔΡΕΙΑΣ': 'ΗΜΑΘΙΑΣ',
+			 'ΑΛΕΞΑΝΔΡΟΥΠΟΛΗΣ': 'ΕΒΡΟΥ',
+			 'ΑΛΙΑΡΤΟΥ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΑΛΙΜΟΥ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΛΜΥΡΟΥ': 'ΜΑΓΝΗΣΙΑΣ',
+			 'ΑΛΜΩΠΙΑΣ': 'ΠΕΛΛΑΣ',
+			 'ΑΛΟΝΝΗΣΟΥ': 'ΣΠΟΡΑΔΩΝ',
+			 'ΑΜΑΡΙΟΥ': 'ΡΕΘΥΜΝΟΥ',
+			 'ΑΜΑΡΟΥΣΙΟΥ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΑΜΟΡΓΟΥ': 'ΝΑΞΟΥ',
+			 'ΑΜΠΕΛΟΚΗΠΩΝ – ΜΕΝΕΜΕΝΗΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΑΜΥΝΤΑΙΟΥ': 'ΦΛΩΡΙΝΑΣ',
+			 'ΑΜΦΙΚΛΕΙΑΣ – ΕΛΑΤΕΙΑΣ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΑΜΦΙΛΟΧΙΑΣ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΑΜΦΙΠΟΛΗΣ': 'ΣΕΡΡΩΝ',
+			 'ΑΝΑΤΟΛΙΚΗΣ ΜΑΝΗΣ': 'ΛΑΚΩΝΙΑΣ',
+			 'ΑΝΑΤΟΛΙΚΗΣ ΣΑΜΟΥ': 'ΣΑΜΟΥ',
+			 'ΑΝΑΦΗΣ': 'ΘΗΡΑΣ',
+			 'ΑΝΔΡΑΒΙΔΑΣ – ΚΥΛΛΗΝΗΣ': 'ΗΛΕΙΑΣ',
+			 'ΑΝΔΡΙΤΣΑΙΝΑΣ – ΚΡΕΣΤΕΝΩΝ': 'ΗΛΕΙΑΣ',
+			 'ΑΝΔΡΟΥ': 'ΑΝΔΡΟΥ',
+			 'ΑΝΤΙΠΑΡΟΥ': 'ΠΑΡΟΥ',
+			 'ΑΝΩΓΕΙΩΝ': 'ΡΕΘΥΜΝΟΥ',
+			 'ΑΠΟΚΟΡΩΝΟΥ': 'ΧΑΝΙΩΝ',
+			 'ΑΡΓΙΘΕΑΣ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΑΡΓΟΣΤΟΛΙΟΥ': 'ΚΕΦΑΛΛΗΝΙΑΣ',
+			 'ΑΡΓΟΥΣ – ΜΥΚΗΝΩΝ': 'ΑΡΓΟΛΙΔΑΣ',
+			 'ΑΡΙΣΤΟΤΕΛΗ': 'ΧΑΛΚΙΔΙΚΗΣ',
+			 'ΑΡΡΙΑΝΩΝ': 'ΡΟΔΟΠΗΣ',
+			 'ΑΡΤΑΙΩΝ': 'ΑΡΤΑΣ',
+			 'ΑΡΧΑΙΑΣ ΟΛΥΜΠΙΑΣ': 'ΗΛΕΙΑΣ',
+			 'ΑΡΧΑΝΩΝ – ΑΣΤΕΡΟΥΣΙΩΝ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΑΣΠΡΟΠΥΡΓΟΥ': 'ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΑΣΤΥΠΑΛΑΙΑΣ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΑΧΑΡΝΩΝ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΒΑΡΗΣ – ΒΟΥΛΑΣ – ΒΟΥΛΙΑΓΜΕΝΗΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΒΕΛΒΕΝΤΟΥ': 'ΚΟΖΑΝΗΣ',
+			 'ΒΕΛΟΥ – ΒΟΧΑΣ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΒΕΡΟΙΑΣ': 'ΗΜΑΘΙΑΣ',
+			 'ΒΙΑΝΝΟΥ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΒΙΣΑΛΤΙΑΣ': 'ΣΕΡΡΩΝ',
+			 'ΒΟΪΟΥ': 'ΚΟΖΑΝΗΣ',
+			 'ΒΟΛΒΗΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΒΟΛΟΥ': 'ΜΑΓΝΗΣΙΑΣ',
+			 'ΒΟΡΕΙΑΣ ΚΕΡΚΥΡΑΣ': 'ΚΕΡΚΥΡΑΣ',
+			 'ΒΟΡΕΙΑΣ ΚΥΝΟΥΡΙΑΣ': 'ΑΡΚΑΔΙΑΣ',
+			 'ΒΟΡΕΙΩΝ ΤΖΟΥΜΕΡΚΩΝ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΒΡΙΛΗΣΣΙΩΝ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΒΥΡΩΝΟΣ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΓΑΛΑΤΣΙΟΥ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΓΑΥΔΟΥ': 'ΧΑΝΙΩΝ',
+			 'ΓΕΩΡΓΙΟΥ ΚΑΡΑΪΣΚΑΚΗ': 'ΑΡΤΑΣ',
+			 'ΓΛΥΦΑΔΑΣ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΓΟΡΤΥΝΑΣ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΓΟΡΤΥΝΙΑΣ': 'ΑΡΚΑΔΙΑΣ',
+			 'ΓΡΕΒΕΝΩΝ': 'ΓΡΕΒΕΝΩΝ',
+			 'ΔΑΦΝΗΣ – ΥΜΗΤΤΟΥ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΔΕΛΤΑ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΔΕΛΦΩΝ': 'ΦΩΚΙΔΑΣ',
+			 'ΔΕΣΚΑΤΗΣ': 'ΓΡΕΒΕΝΩΝ',
+			 'ΔΙΔΥΜΟΤΕΙΧΟΥ': 'ΕΒΡΟΥ',
+			 'ΔΙΟΝΥΣΟΥ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΔΙΟΥ – ΟΛΥΜΠΟΥ': 'ΠΙΕΡΙΑΣ',
+			 'ΔΙΡΦΥΩΝ – ΜΕΣΣΑΠΙΩΝ': 'ΕΥΒΟΙΑΣ',
+			 'ΔΙΣΤΟΜΟΥ – ΑΡΑΧΟΒΑΣ – ΑΝΤΙΚΥΡΑΣ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΔΟΜΟΚΟΥ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΔΟΞΑΤΟΥ': 'ΔΡΑΜΑΣ',
+			 'ΔΡΑΜΑΣ': 'ΔΡΑΜΑΣ',
+			 'ΔΥΤΙΚΗΣ ΑΧΑΪΑΣ': 'ΑΧΑΪΑΣ',
+			 'ΔΥΤΙΚΗΣ ΛΕΣΒΟΥ': 'ΛΕΣΒΟΥ',
+			 'ΔΥΤΙΚΗΣ ΜΑΝΗΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΔΥΤΙΚΗΣ ΣΑΜΟΥ': 'ΣΑΜΟΥ',
+			 'ΔΩΔΩΝΗΣ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΔΩΡΙΔΟΣ': 'ΦΩΚΙΔΑΣ',
+			 'ΕΔΕΣΣΑΣ': 'ΠΕΛΛΑΣ',
+			 'ΕΛΑΣΣΟΝΑΣ': 'ΛΑΡΙΣΑΣ',
+			 'ΕΛΑΦΟΝΗΣΟΥ': 'ΛΑΚΩΝΙΑΣ',
+			 'ΕΛΕΥΣΙΝΑΣ': 'ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΕΛΛΗΝΙΚΟΥ – ΑΡΓΥΡΟΥΠΟΛΗΣ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΕΜΜΑΝΟΥΗΛ ΠΑΠΠΑ': 'ΣΕΡΡΩΝ',
+			 'ΕΟΡΔΑΙΑΣ': 'ΚΟΖΑΝΗΣ',
+			 'ΕΠΙΔΑΥΡΟΥ': 'ΑΡΓΟΛΙΔΑΣ',
+			 'ΕΡΕΤΡΙΑΣ': 'ΕΥΒΟΙΑΣ',
+			 'ΕΡΜΙΟΝΙΔΑΣ': 'ΑΡΓΟΛΙΔΑΣ',
+			 'ΕΡΥΜΑΝΘΟΥ': 'ΑΧΑΪΑΣ',
+			 'ΕΥΡΩΤΑ': 'ΛΑΚΩΝΙΑΣ',
+			 'ΖΑΓΟΡΑΣ – ΜΟΥΡΕΣΙΟΥ': 'ΜΑΓΝΗΣΙΑΣ',
+			 'ΖΑΓΟΡΙΟΥ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΖΑΚΥΝΘΟΥ': 'ΖΑΚΥΝΘΟΥ',
+			 'ΖΑΧΑΡΩΣ': 'ΗΛΕΙΑΣ',
+			 'ΖΗΡΟΥ': 'ΠΡΕΒΕΖΑΣ',
+			 'ΖΙΤΣΑΣ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΖΩΓΡΑΦΟΥ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΗΓΟΥΜΕΝΙΤΣΑΣ': 'ΘΕΣΠΡΩΤΙΑΣ',
+			 'ΗΛΙΔΑΣ': 'ΗΛΕΙΑΣ',
+			 'ΗΛΙΟΥΠΟΛΕΩΣ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΗΡΑΚΛΕΙΑΣ': 'ΣΕΡΡΩΝ',
+			 'ΗΡΑΚΛΕΙΟΥ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΘΑΣΟΥ': 'ΘΑΣΟΥ',
+			 'ΘΕΡΜΑΪΚΟΥ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΘΕΡΜΗΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΘΕΡΜΟΥ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΘΕΣΣΑΛΟΝΙΚΗΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΘΗΒΑΙΩΝ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΘΗΡΑΣ': 'ΘΗΡΑΣ',
+			 'ΙΑΣΜΟΥ': 'ΡΟΔΟΠΗΣ',
+			 'ΙΕΡΑΠΕΤΡΑΣ': 'ΛΑΣΙΘΙΟΥ',
+			 'ΙΕΡΑΣ ΠΟΛΗΣ ΜΕΣΟΛΟΓΓΙΟΥ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΙΗΤΩΝ': 'ΘΗΡΑΣ',
+			 'ΙΘΑΚΗΣ': 'ΙΘΑΚΗΣ',
+			 'ΙΚΑΡΙΑΣ': 'ΙΚΑΡΙΑΣ',
+			 'ΙΛΙΟΥ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΙΣΤΙΑΙΑΣ – ΑΙΔΗΨΟΥ': 'ΕΥΒΟΙΑΣ',
+			 'ΙΩΑΝΝΙΤΩΝ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΚΑΒΑΛΑΣ': 'ΚΑΒΑΛΑΣ',
+			 'ΚΑΙΣΑΡΙΑΝΗΣ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΚΑΛΑΒΡΥΤΩΝ': 'ΑΧΑΪΑΣ',
+			 'ΚΑΛΑΜΑΡΙΑΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΚΑΛΑΜΑΤΑΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΚΑΛΑΜΠΑΚΑΣ': 'ΤΡΙΚΑΛΩΝ',
+			 'ΚΑΛΛΙΘΕΑΣ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΚΑΛΥΜΝΙΩΝ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΚΑΝΤΑΝΟΥ – ΣΕΛΙΝΟΥ': 'ΧΑΝΙΩΝ',
+			 'ΚΑΡΔΙΤΣΑΣ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΚΑΡΠΑΘΟΥ': 'ΚΑΡΠΑΘΟΥ',
+			 'ΚΑΡΠΕΝΗΣΙΟΥ': 'ΕΥΡΥΤΑΝΙΑΣ',
+			 'ΚΑΡΥΣΤΟΥ': 'ΕΥΒΟΙΑΣ',
+			 'ΚΑΣΟΥ': 'ΚΑΡΠΑΘΟΥ',
+			 'ΚΑΣΣΑΝΔΡΑΣ': 'ΧΑΛΚΙΔΙΚΗΣ',
+			 'ΚΑΣΤΟΡΙΑΣ': 'ΚΑΣΤΟΡΙΑΣ',
+			 'ΚΑΤΕΡΙΝΗΣ': 'ΠΙΕΡΙΑΣ',
+			 'ΚΑΤΩ ΝΕΥΡΟΚΟΠΙΟΥ': 'ΔΡΑΜΑΣ',
+			 'ΚΕΑΣ': 'ΚΕΑΣ – ΚΥΘΝΟΥ',
+			 'ΚΕΝΤΡΙΚΗΣ ΚΕΡΚΥΡΑΣ ΚΑΙ ΔΙΑΠΟΝΤΙΩΝ ΝΗΣΩΝ': 'ΚΕΡΚΥΡΑΣ',
+			 'ΚΕΝΤΡΙΚΩΝ ΤΖΟΥΜΕΡΚΩΝ': 'ΑΡΤΑΣ',
+			 'ΚΕΡΑΤΣΙΝΙΟΥ – ΔΡΑΠΕΤΣΩΝΑΣ': 'ΠΕΙΡΑΙΩΣ',
+			 'ΚΗΦΙΣΙΑΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΚΙΛΕΛΕΡ': 'ΛΑΡΙΣΑΣ',
+			 'ΚΙΛΚΙΣ': 'ΚΙΛΚΙΣ',
+			 'ΚΙΜΩΛΟΥ': 'ΜΗΛΟΥ',
+			 'ΚΙΣΣΑΜΟΥ': 'ΧΑΝΙΩΝ',
+			 'ΚΟΖΑΝΗΣ': 'ΚΟΖΑΝΗΣ',
+			 'ΚΟΜΟΤΗΝΗΣ': 'ΡΟΔΟΠΗΣ',
+			 'ΚΟΝΙΤΣΑΣ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΚΟΡΔΕΛΙΟΥ – ΕΥΟΣΜΟΥ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΚΟΡΙΝΘΙΩΝ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΚΟΡΥΔΑΛΛΟΥ': 'ΠΕΙΡΑΙΩΣ',
+			 'ΚΡΩΠΙΑΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΚΥΘΗΡΩΝ': 'ΝΗΣΩΝ',
+			 'ΚΥΘΝΟΥ': 'ΚΕΑΣ – ΚΥΘΝΟΥ',
+			 'ΚΥΜΗΣ – ΑΛΙΒΕΡΙΟΥ': 'ΕΥΒΟΙΑΣ',
+			 'ΚΩ': 'ΚΩ',
+			 'ΛΑΓΚΑΔΑ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΛΑΜΙΕΩΝ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΛΑΡΙΣΑΙΩΝ': 'ΛΑΡΙΣΑΣ',
+			 'ΛΑΥΡΕΩΤΙΚΗΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΛΕΒΑΔΕΩΝ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΛΕΙΨΩΝ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΛΕΡΟΥ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΛΕΥΚΑΔΑΣ': 'ΛΕΥΚΑΔΑΣ',
+			 'ΛΗΜΝΟΥ': 'ΛΗΜΝΟΥ',
+			 'ΛΗΞΟΥΡΙΟΥ': 'ΚΕΦΑΛΛΗΝΙΑΣ',
+			 'ΛΙΜΝΗΣ ΠΛΑΣΤΗΡΑ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΛΟΚΡΩΝ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΛΟΥΤΡΑΚΙΟΥ – ΑΓΙΩΝ ΘΕΟΔΩΡΩΝ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΛΥΚΟΒΡΥΣΗΣ – ΠΕΥΚΗΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΜΑΚΡΑΚΩΜΗΣ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΜΑΛΕΒΙΖΙΟΥ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΜΑΝΔΡΑΣ – ΕΙΔΥΛΛΙΑΣ': 'ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΜΑΝΤΟΥΔΙΟΥ – ΛΙΜΝΗΣ – ΑΓΙΑΣ ΑΝΝΑΣ': 'ΕΥΒΟΙΑΣ',
+			 'ΜΑΡΑΘΩΝΟΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΜΑΡΚΟΠΟΥΛΟΥ ΜΕΣΟΓΑΙΑΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΜΑΡΩΝΕΙΑΣ – ΣΑΠΩΝ': 'ΡΟΔΟΠΗΣ',
+			 'ΜΕΓΑΛΟΠΟΛΗΣ': 'ΑΡΚΑΔΙΑΣ',
+			 'ΜΕΓΑΝΗΣΙΟΥ': 'ΛΕΥΚΑΔΑΣ',
+			 'ΜΕΓΑΡΕΩΝ': 'ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΜΕΓΙΣΤΗΣ': 'ΡΟΔΟΥ',
+			 'ΜΕΣΣΗΝΗΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΜΕΤΑΜΟΡΦΩΣΕΩΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΜΕΤΣΟΒΟΥ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΜΗΛΟΥ': 'ΜΗΛΟΥ',
+			 'ΜΙΝΩΑ ΠΕΔΙΑΔΑΣ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΜΟΝΕΜΒΑΣΙΑΣ': 'ΛΑΚΩΝΙΑΣ',
+			 'ΜΟΣΧΑΤΟΥ – ΤΑΥΡΟΥ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΜΟΥΖΑΚΙΟΥ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΜΥΚΗΣ': 'ΞΑΝΘΗΣ',
+			 'ΜΥΚΟΝΟΥ': 'ΜΥΚΟΝΟΥ',
+			 'ΜΥΛΟΠΟΤΑΜΟΥ': 'ΡΕΘΥΜΝΟΥ',
+			 'ΜΥΤΙΛΗΝΗΣ': 'ΛΕΣΒΟΥ',
+			 'ΜΩΛΟΥ – ΑΓΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΥ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΝΑΞΟΥ ΚΑΙ ΜΙΚΡΩΝ ΚΥΚΛΑΔΩΝ': 'ΝΑΞΟΥ',
+			 'ΝΑΟΥΣΑΣ': 'ΗΜΑΘΙΑΣ',
+			 'ΝΑΥΠΑΚΤΙΑΣ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΝΑΥΠΛΙΕΩΝ': 'ΑΡΓΟΛΙΔΑΣ',
+			 'ΝΕΑΠΟΛΗΣ – ΣΥΚΕΩΝ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΝΕΑΣ ΖΙΧΝΗΣ': 'ΣΕΡΡΩΝ',
+			 'ΝΕΑΣ ΙΩΝΙΑΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΝΕΑΣ ΠΡΟΠΟΝΤΙΔΑΣ': 'ΧΑΛΚΙΔΙΚΗΣ',
+			 'ΝΕΑΣ ΣΜΥΡΝΗΣ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΝΕΜΕΑΣ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΝΕΣΤΟΡΙΟΥ': 'ΚΑΣΤΟΡΙΑΣ',
+			 'ΝΕΣΤΟΥ': 'ΚΑΒΑΛΑΣ',
+			 'ΝΙΚΑΙΑΣ – ΑΓΙΟΥ ΙΩΑΝΝΗ ΡΕΝΤΗ': 'ΠΕΙΡΑΙΩΣ',
+			 'ΝΙΚΟΛΑΟΥ ΣΚΟΥΦΑ': 'ΑΡΤΑΣ',
+			 'ΝΙΣΥΡΟΥ': 'ΚΩ',
+			 'ΝΟΤΙΑΣ ΚΕΡΚΥΡΑΣ': 'ΚΕΡΚΥΡΑΣ',
+			 'ΝΟΤΙΑΣ ΚΥΝΟΥΡΙΑΣ': 'ΑΡΚΑΔΙΑΣ',
+			 'ΝΟΤΙΟΥ ΠΗΛΙΟΥ': 'ΜΑΓΝΗΣΙΑΣ',
+			 'ΞΑΝΘΗΣ': 'ΞΑΝΘΗΣ',
+			 'ΞΗΡΟΜΕΡΟΥ': 'ΑΙΤΩΛΟΑΚΑΡΝΑΝΙΑΣ',
+			 'ΞΥΛΟΚΑΣΤΡΟΥ – ΕΥΡΩΣΤΙΝΗΣ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΟΙΝΟΥΣΣΩΝ': 'ΧΙΟΥ',
+			 'ΟΙΧΑΛΙΑΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΟΡΕΣΤΙΑΔΑΣ': 'ΕΒΡΟΥ',
+			 'ΟΡΕΣΤΙΔΟΣ': 'ΚΑΣΤΟΡΙΑΣ',
+			 'ΟΡΟΠΕΔΙΟΥ ΛΑΣΙΘΙΟΥ': 'ΛΑΣΙΘΙΟΥ',
+			 'ΟΡΧΟΜΕΝΟΥ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΠΑΓΓΑΙΟΥ': 'ΚΑΒΑΛΑΣ',
+			 'ΠΑΙΑΝΙΑΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΠΑΙΟΝΙΑΣ': 'ΚΙΛΚΙΣ',
+			 'ΠΑΛΑΙΟΥ ΦΑΛΗΡΟΥ': 'ΝΟΤΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΠΑΛΑΜΑ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΠΑΛΛΗΝΗΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΠΑΞΩΝ': 'ΚΕΡΚΥΡΑΣ',
+			 'ΠΑΠΑΓΟΥ – ΧΟΛΑΡΓΟΥ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΠΑΡΑΝΕΣΤΙΟΥ': 'ΔΡΑΜΑΣ',
+			 'ΠΑΡΓΑΣ': 'ΠΡΕΒΕΖΑΣ',
+			 'ΠΑΡΟΥ': 'ΠΑΡΟΥ',
+			 'ΠΑΤΜΟΥ': 'ΚΑΛΥΜΝΟΥ',
+			 'ΠΑΤΡΕΩΝ': 'ΑΧΑΪΑΣ',
+			 'ΠΑΥΛΟΥ ΜΕΛΑ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΠΕΙΡΑΙΩΣ': 'ΠΕΙΡΑΙΩΣ',
+			 'ΠΕΛΛΑΣ': 'ΠΕΛΛΑΣ',
+			 'ΠΕΝΤΕΛΗΣ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΠΕΡΑΜΑΤΟΣ': 'ΠΕΙΡΑΙΩΣ',
+			 'ΠΕΡΙΣΤΕΡΙΟΥ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΠΕΤΡΟΥΠΟΛΕΩΣ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΠΗΝΕΙΟΥ': 'ΗΛΕΙΑΣ',
+			 'ΠΛΑΤΑΝΙΑ': 'ΧΑΝΙΩΝ',
+			 'ΠΟΛΥΓΥΡΟΥ': 'ΧΑΛΚΙΔΙΚΗΣ',
+			 'ΠΟΡΟΥ': 'ΝΗΣΩΝ',
+			 'ΠΡΕΒΕΖΑΣ': 'ΠΡΕΒΕΖΑΣ',
+			 'ΠΡΕΣΠΩΝ': 'ΦΛΩΡΙΝΑΣ',
+			 'ΠΡΟΣΟΤΣΑΝΗΣ': 'ΔΡΑΜΑΣ',
+			 'ΠΥΔΝΑΣ – ΚΟΛΙΝΔΡΟΥ': 'ΠΙΕΡΙΑΣ',
+			 'ΠΥΛΑΙΑΣ – ΧΟΡΤΙΑΤΗ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΠΥΛΗΣ': 'ΤΡΙΚΑΛΩΝ',
+			 'ΠΥΛΟΥ – ΝΕΣΤΟΡΟΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΠΥΡΓΟΥ': 'ΗΛΕΙΑΣ',
+			 'ΠΩΓΩΝΙΟΥ': 'ΙΩΑΝΝΙΝΩΝ',
+			 'ΡΑΦΗΝΑΣ – ΠΙΚΕΡΜΙΟΥ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΡΕΘΥΜΝΗΣ': 'ΡΕΘΥΜΝΟΥ',
+			 'ΡΗΓΑ ΦΕΡΑΙΟΥ': 'ΜΑΓΝΗΣΙΑΣ',
+			 'ΡΟΔΟΥ': 'ΡΟΔΟΥ',
+			 'ΣΑΛΑΜΙΝΟΣ': 'ΝΗΣΩΝ',
+			 'ΣΑΜΗΣ': 'ΚΕΦΑΛΛΗΝΙΑΣ',
+			 'ΣΑΜΟΘΡΑΚΗΣ': 'ΕΒΡΟΥ',
+			 'ΣΑΡΩΝΙΚΟΥ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΣΕΡΒΙΩΝ': 'ΚΟΖΑΝΗΣ',
+			 'ΣΕΡΙΦΟΥ': 'ΜΗΛΟΥ',
+			 'ΣΕΡΡΩΝ': 'ΣΕΡΡΩΝ',
+			 'ΣΗΤΕΙΑΣ': 'ΛΑΣΙΘΙΟΥ',
+			 'ΣΙΘΩΝΙΑΣ': 'ΧΑΛΚΙΔΙΚΗΣ',
+			 'ΣΙΚΙΝΟΥ': 'ΘΗΡΑΣ',
+			 'ΣΙΚΥΩΝΙΩΝ': 'ΚΟΡΙΝΘΙΑΣ',
+			 'ΣΙΝΤΙΚΗΣ': 'ΣΕΡΡΩΝ',
+			 'ΣΙΦΝΟΥ': 'ΜΗΛΟΥ',
+			 'ΣΚΙΑΘΟΥ': 'ΣΠΟΡΑΔΩΝ',
+			 'ΣΚΟΠΕΛΟΥ': 'ΣΠΟΡΑΔΩΝ',
+			 'ΣΚΥΔΡΑΣ': 'ΠΕΛΛΑΣ',
+			 'ΣΚΥΡΟΥ': 'ΕΥΒΟΙΑΣ',
+			 'ΣΟΥΛΙΟΥ': 'ΘΕΣΠΡΩΤΙΑΣ',
+			 'ΣΟΥΦΛΙΟΥ': 'ΕΒΡΟΥ',
+			 'ΣΟΦΑΔΩΝ': 'ΚΑΡΔΙΤΣΑΣ',
+			 'ΣΠΑΡΤΗΣ': 'ΛΑΚΩΝΙΑΣ',
+			 'ΣΠΑΤΩΝ – ΑΡΤΕΜΙΔΟΣ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΣΠΕΤΣΩΝ': 'ΝΗΣΩΝ',
+			 'ΣΤΥΛΙΔΟΣ': 'ΦΘΙΩΤΙΔΑΣ',
+			 'ΣΥΜΗΣ': 'ΡΟΔΟΥ',
+			 'ΣΥΡΟΥ – ΕΡΜΟΥΠΟΛΗΣ': 'ΣΥΡΟΥ',
+			 'ΣΦΑΚΙΩΝ': 'ΧΑΝΙΩΝ',
+			 'ΤΑΝΑΓΡΑΣ': 'ΒΟΙΩΤΙΑΣ',
+			 'ΤΕΜΠΩΝ': 'ΛΑΡΙΣΑΣ',
+			 'ΤΗΛΟΥ': 'ΡΟΔΟΥ',
+			 'ΤΗΝΟΥ': 'ΤΗΝΟΥ',
+			 'ΤΟΠΕΙΡΟΥ': 'ΞΑΝΘΗΣ',
+			 'ΤΡΙΚΚΑΙΩΝ': 'ΤΡΙΚΑΛΩΝ',
+			 'ΤΡΙΠΟΛΗΣ': 'ΑΡΚΑΔΙΑΣ',
+			 'ΤΡΙΦΥΛΙΑΣ': 'ΜΕΣΣΗΝΙΑΣ',
+			 'ΤΡΟΙΖΗΝΙΑΣ': 'ΝΗΣΩΝ',
+			 'ΤΥΡΝΑΒΟΥ': 'ΛΑΡΙΣΑΣ',
+			 'ΥΔΡΑΣ': 'ΝΗΣΩΝ',
+			 'ΦΑΙΣΤΟΥ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΦΑΡΚΑΔΟΝΑΣ': 'ΤΡΙΚΑΛΩΝ',
+			 'ΦΑΡΣΑΛΩΝ': 'ΛΑΡΙΣΑΣ',
+			 'ΦΙΛΑΔΕΛΦΕΙΑΣ – ΧΑΛΚΗΔΟΝΟΣ': 'ΚΕΝΤΡΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΦΙΛΙΑΤΩΝ': 'ΘΕΣΠΡΩΤΙΑΣ',
+			 'ΦΙΛΟΘΕΗΣ – ΨΥΧΙΚΟΥ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΦΛΩΡΙΝΑΣ': 'ΦΛΩΡΙΝΑΣ',
+			 'ΦΟΛΕΓΑΝΔΡΟΥ': 'ΘΗΡΑΣ',
+			 'ΦΟΥΡΝΩΝ ΚΟΡΣΕΩΝ': 'ΙΚΑΡΙΑΣ',
+			 'ΦΥΛΗΣ': 'ΔΥΤΙΚΗΣ ΑΤΤΙΚΗΣ',
+			 'ΧΑΪΔΑΡΙΟΥ': 'ΔΥΤΙΚΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΧΑΛΑΝΔΡΙΟΥ': 'ΒΟΡΕΙΟΥ ΤΟΜΕΑ ΑΘΗΝΩΝ',
+			 'ΧΑΛΚΗΔΟΝΟΣ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΧΑΛΚΗΣ': 'ΡΟΔΟΥ',
+			 'ΧΑΛΚΙΔΕΩΝ': 'ΕΥΒΟΙΑΣ',
+			 'ΧΑΝΙΩΝ': 'ΧΑΝΙΩΝ',
+			 'ΧΕΡΣΟΝΗΣΟΥ': 'ΗΡΑΚΛΕΙΟΥ',
+			 'ΧΙΟΥ': 'ΧΙΟΥ',
+			 'ΨΑΡΩΝ': 'ΧΙΟΥ',
+			 'ΩΡΑΙΟΚΑΣΤΡΟΥ': 'ΘΕΣΣΑΛΟΝΙΚΗΣ',
+			 'ΩΡΩΠΟΥ': 'ΑΝΑΤΟΛΙΚΗΣ ΑΤΤΙΚΗΣ'
+		};
+	
+	// Generate cities and regions arrays from municipalityToRegion
+	const cities = Object.keys(municipalityToRegion).sort();
+	const regions = [...new Set(Object.values(municipalityToRegion))].sort();
+	
+	// Συνάρτηση που ενημερώνει την Περιφερειακή Ενότητα βάσει του Δήμου
+	function updateRegion() {
+		const cityInput = document.getElementById("city");
+		const regionInput = document.getElementById("region");
+		
+		// Εύρεση της Περιφερειακής Ενότητας βάσει του επιλεγμένου Δήμου
+		const selectedCity = cityInput.value.trim().toUpperCase();
+		regionInput.value = municipalityToRegion[selectedCity] || "ΔΕΝ";
+	}
+
+	// Event Listeners
+	document.addEventListener('DOMContentLoaded', () => {
+		const form = document.getElementById('building-form');
+		const cityInput = document.getElementById('city');
+		const regionInput = document.getElementById('region');
+		const cityList = document.getElementById('city-list');
+		const regionList = document.getElementById('region-list');
+		const buildingTypeSelect = document.getElementById('building-type');
+		const legalEntityDetailsDiv = document.getElementById('legal-entity-details');
+
+		// Correct event listener for city input
+		cityInput.addEventListener("change", updateRegion);
+		cityInput.addEventListener("blur", updateRegion);
+
+		function populateDropdown(input, list, items) {
+			list.innerHTML = '';
+			// Convert input to uppercase for consistency with the data
+			const filter = input.value.trim().toUpperCase();
+			
+			// Modified filtering logic to match from the start of the word
+			const filteredItems = items.filter(item => 
+				item.startsWith(filter)
+			);
+
+			// If no exact matches found, try partial matches
+			if (filteredItems.length === 0) {
+				const partialMatches = items.filter(item =>
+					item.includes(filter)
+				);
+				filteredItems.push(...partialMatches);
+			}
+
+			// Remove duplicates
+			const uniqueItems = [...new Set(filteredItems)];
+
+			uniqueItems.forEach(item => {
+				const div = document.createElement('div');
+				div.textContent = item;
+				div.addEventListener('click', () => {
+					input.value = item;
+					list.style.display = 'none';
+					if (input === cityInput) {
+						updateRegion();
+					}
+				});
+				list.appendChild(div);
+			});
+
+			list.style.display = uniqueItems.length > 0 ? 'block' : 'none';
+		}
+
+		// Event listeners for city dropdown
+		cityInput.addEventListener('focus', () => populateDropdown(cityInput, cityList, cities));
+		cityInput.addEventListener('input', () => populateDropdown(cityInput, cityList, cities));
+
+		// Event listeners for region dropdown
+		regionInput.addEventListener('focus', () => populateDropdown(regionInput, regionList, regions));
+		regionInput.addEventListener('input', () => populateDropdown(regionInput, regionList, regions));
+
+		// Prevent form submission on enter
+		[cityInput, regionInput].forEach(input => {
+			input.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter') {
+					e.preventDefault();
+				}
+			});
+		});
+
+		// Close dropdowns when clicking outside
+		document.addEventListener('click', (e) => {
+			if (!cityInput.contains(e.target) && !cityList.contains(e.target)) {
+				cityList.style.display = 'none';
+			}
+			if (!regionInput.contains(e.target) && !regionList.contains(e.target)) {
+				regionList.style.display = 'none';
+			}
+		});
+
+		// Building type change handler
+		buildingTypeSelect.addEventListener('change', function() {
+			const isLegalEntity = this.value === 'Μονοκατοικία ιδιοκτησίας νομικού προσώπου';
+			legalEntityDetailsDiv.style.display = isLegalEntity ? 'table-row' : 'none';
+			
+			const legalEntityInputs = legalEntityDetailsDiv.querySelectorAll('input');
+			legalEntityInputs.forEach(input => {
+				input.required = isLegalEntity;
+				if (!isLegalEntity) {
+					input.value = '';
+				}
+			});
+		});
+
+		
+		// Attach download handler to form
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			downloadData();
+		});
+	});
+
+	function refreshForm() {
+    // Επιλέγουμε όλα τα input στοιχεία
+    const inputs = document.querySelectorAll('form input');
+
+    inputs.forEach(input => {
+        // Ελέγχουμε αν το id του input δεν είναι το ίδιο με αυτά που θέλουμε να διατηρήσουμε
+        if (input.id !== 'autopsy_eng_name' && input.id !== 'autopsy_eng_phone') {
+            input.value = ''; // Σβήνουμε την τιμή του input
+            input.setCustomValidity(''); // Επαναφορά του validation
+            input.checkValidity(); // Ελέγχουμε την εγκυρότητα του πεδίου
+        }
+    });
+}	
+	
+	// ενεργοποίηση των selections μόνο αν έχει επιλεγεί το checkbox
+	document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+        const select = e.target.parentNode.querySelector('select');
+        if (e.target.checked) {
+            select.removeAttribute('disabled');
+        } else {
+            select.setAttribute('disabled', 'true');
+            select.value = "";
+        }
+    });
+	});
+		
+    </script>
+</body>
+</html>
